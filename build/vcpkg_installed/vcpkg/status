@@ -1,0 +1,69 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f4505c9ad836bfed683190b3ff1d72e5a8edf06d91f4baf1a44d082217e9744f
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 90159208e62d307bd52df8c1321b0d2d5a88958cee90aa3cdef03adb5f0586f5
+Status: install ok installed
+
+Package: egl-registry
+Version: 2025-05-27
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 721eb6f7fb332958c34d120fe25bd47f54a1f0173bba441987e02705685aec00
+Description: EGL API and Extension Registry
+Status: install ok installed
+
+Package: opengl-registry
+Version: 2025-10-23
+Depends: egl-registry
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 21d11d5f9d44effbdb309ccc23aab5e42c1da835830f5920733159da535ae443
+Description: OpenGL, OpenGL ES, and OpenGL ES-SC API and Extension Registry
+Status: install ok installed
+
+Package: opengl
+Version: 2022-12-04
+Port-Version: 3
+Depends: opengl-registry
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e23dd3883314139499eadfcf53b98f0a3e97f9cbd37b51cf8b20dd40ea1d0096
+Description: Open Graphics Library (OpenGL)[3][4][5] is a cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
+Status: install ok installed
+
+Package: glew
+Version: 2.3.0
+Depends: opengl, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 0ca4ed18b8f486fa47d741bf2aa4e40e10311377d1ab2b390761166338d679af
+Description: The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++ extension loading library.
+Status: install ok installed
+
+Package: glfw3
+Version: 3.4
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8d7c959d322ddff223255d629e70440d65a4a54804a68e0d46598659c7baa5f1
+Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
+Status: install ok installed
+
+Package: glm
+Version: 1.0.3
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f6c34812229738c901d9630e49bd3aeb4bd11bca99acf9e4e72fda5a83f11aa2
+Description: OpenGL Mathematics (GLM)
+Status: install ok installed
+

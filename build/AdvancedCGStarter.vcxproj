@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{34BFDA57-44B5-3984-94DC-69ECDFB8B191}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>AdvancedCGStarter</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="do_not_import_user.props" Condition="exists('do_not_import_user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AdvancedCGStarter.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AdvancedCGStarter</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AdvancedCGStarter.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AdvancedCGStarter</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">AdvancedCGStarter.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">AdvancedCGStarter</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">AdvancedCGStarter.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">AdvancedCGStarter</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;GLFW_DLL;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;GLFW_DLL;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/Acer/Desktop/Advance_Computer_Graphic/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Debug/AdvancedCGStarter.exe" -installedDir "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/debug/bin" -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Shaders" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Debug/Shaders"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Assets" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Debug/Assets"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;vcpkg_installed\x64-windows\debug\lib\glfw3dll.lib;vcpkg_installed\x64-windows\debug\lib\glew32d.lib;vcpkg_installed\x64-windows\debug\lib\glm.lib;gdi32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Debug/AdvancedCGStarter.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Debug/AdvancedCGStarter.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/Acer/Desktop/Advance_Computer_Graphic/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Release/AdvancedCGStarter.exe" -installedDir "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/bin" -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Shaders" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Release/Shaders"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Assets" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Release/Assets"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;vcpkg_installed\x64-windows\lib\glfw3dll.lib;vcpkg_installed\x64-windows\lib\glew32.lib;vcpkg_installed\x64-windows\lib\glm.lib;gdi32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Release/AdvancedCGStarter.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/Release/AdvancedCGStarter.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/Acer/Desktop/Advance_Computer_Graphic/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/MinSizeRel/AdvancedCGStarter.exe" -installedDir "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/bin" -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Shaders" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/MinSizeRel/Shaders"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Assets" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/MinSizeRel/Assets"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;vcpkg_installed\x64-windows\lib\glfw3dll.lib;vcpkg_installed\x64-windows\lib\glew32.lib;vcpkg_installed\x64-windows\lib\glm.lib;gdi32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/MinSizeRel/AdvancedCGStarter.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/MinSizeRel/AdvancedCGStarter.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;GLFW_DLL;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Acer\Desktop\Final Advance Computer Graphic\src;C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/Acer/Desktop/Advance_Computer_Graphic/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/RelWithDebInfo/AdvancedCGStarter.exe" -installedDir "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/vcpkg_installed/x64-windows/bin" -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Shaders" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/RelWithDebInfo/Shaders"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "C:/Users/Acer/Desktop/Final Advance Computer Graphic/Assets" "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/RelWithDebInfo/Assets"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;vcpkg_installed\x64-windows\lib\glfw3dll.lib;vcpkg_installed\x64-windows\lib\glew32.lib;vcpkg_installed\x64-windows\lib\glm.lib;gdi32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/RelWithDebInfo/AdvancedCGStarter.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/RelWithDebInfo/AdvancedCGStarter.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Acer/Desktop/Final Advance Computer Graphic/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Acer/Desktop/Final Advance Computer Graphic" "-BC:/Users/Acer/Desktop/Final Advance Computer Graphic/build" --check-stamp-file "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\SelectLibraryConfigurations.cmake;C:\Users\Acer\Desktop\Advance_Computer_Graphic\vcpkg\scripts\buildsystems\vcpkg.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeCXXCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeRCCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeSystem.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\CopyImportedTargetProperties.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\vcpkg-cmake-wrapper.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\vcpkg.json;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Acer/Desktop/Final Advance Computer Graphic/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Acer/Desktop/Final Advance Computer Graphic" "-BC:/Users/Acer/Desktop/Final Advance Computer Graphic/build" --check-stamp-file "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\SelectLibraryConfigurations.cmake;C:\Users\Acer\Desktop\Advance_Computer_Graphic\vcpkg\scripts\buildsystems\vcpkg.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeCXXCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeRCCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeSystem.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\CopyImportedTargetProperties.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\vcpkg-cmake-wrapper.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\vcpkg.json;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Acer/Desktop/Final Advance Computer Graphic/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Acer/Desktop/Final Advance Computer Graphic" "-BC:/Users/Acer/Desktop/Final Advance Computer Graphic/build" --check-stamp-file "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\SelectLibraryConfigurations.cmake;C:\Users\Acer\Desktop\Advance_Computer_Graphic\vcpkg\scripts\buildsystems\vcpkg.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeCXXCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeRCCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeSystem.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\CopyImportedTargetProperties.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\vcpkg-cmake-wrapper.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\vcpkg.json;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Acer/Desktop/Final Advance Computer Graphic/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Acer/Desktop/Final Advance Computer Graphic" "-BC:/Users/Acer/Desktop/Final Advance Computer Graphic/build" --check-stamp-file "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\SelectLibraryConfigurations.cmake;C:\Users\Acer\Desktop\Advance_Computer_Graphic\vcpkg\scripts\buildsystems\vcpkg.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeCXXCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeRCCompiler.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\4.1.2\CMakeSystem.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\CopyImportedTargetProperties.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\glew-targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glew\vcpkg-cmake-wrapper.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-debug.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig-release.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfig.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\vcpkg_installed\x64-windows\share\glm\glmConfigVersion.cmake;C:\Users\Acer\Desktop\Final Advance Computer Graphic\vcpkg.json;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs\Shader.cpp" />
+    <ClCompile Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs\Window.cpp" />
+    <ClCompile Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs\Anim.cpp" />
+    <ClCompile Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\Libs\stb_image.cpp" />
+    <ClCompile Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Acer\Desktop\Final Advance Computer Graphic\build\ZERO_CHECK.vcxproj">
+      <Project>{E49B9CA4-94C0-3065-A1D0-28F6DEF0A7B7}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

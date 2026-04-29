@@ -1,0 +1,47 @@
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+The following packages are already installed:
+  * egl-registry:x64-windows@2025-05-27
+    glew:x64-windows@2.3.0
+    glfw3:x64-windows@3.4#1
+    glm:x64-windows@1.0.3
+  * opengl:x64-windows@2022-12-04#3
+  * opengl-registry:x64-windows@2025-10-23
+  * vcpkg-cmake:x64-windows@2024-04-23
+  * vcpkg-cmake-config:x64-windows@2024-05-23
+glew provides CMake targets:
+
+  # Legacy CMake find module
+  find_package(GLEW REQUIRED)
+  target_link_libraries(main PRIVATE GLEW::GLEW)
+
+  # Modern CMake config package
+  find_package(GLEW CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE GLEW::GLEW)
+
+glew provides pkg-config modules:
+
+  # The OpenGL Extension Wrangler library
+  glew
+
+glfw3 provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(glfw3 CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE glfw)
+
+glfw3 provides pkg-config modules:
+
+  # A multi-platform library for OpenGL, window and input
+  glfw3
+
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+    # Or use the header-only version
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm-header-only)
+
+All requested installations completed successfully in: 2.08 ms

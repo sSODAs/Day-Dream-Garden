@@ -1,0 +1,10 @@
+^C:\USERS\ACER\DESKTOP\FINAL ADVANCE COMPUTER GRAPHIC\BUILD\CMAKEFILES\7D70393596D99FAE3B046CF8C4DD54C4\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Acer/Desktop/Final Advance Computer Graphic" "-BC:/Users/Acer/Desktop/Final Advance Computer Graphic/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/Acer/Desktop/Final Advance Computer Graphic/build/AdvancedCGFirstProject.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
