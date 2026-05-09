@@ -10,6 +10,7 @@ out vec4 FragColor;
 
 uniform int uDebugMode;
 uniform sampler2D uGrassTexture;
+uniform float uTime;
 
 float hash21(vec2 p)
 {
@@ -45,6 +46,11 @@ void main()
     color = mix(color, yellow, smoothstep(0.82, 0.98, vColorVar + patchValue * 0.18) * 0.26);
     color *= mix(0.90, 1.16, vColorVar);
     color *= mix(0.96, 1.24, vWind);
+
+    float lightPatch = sin(vWorldPos.x * 2.5 + uTime * 0.20) *
+                       sin(vWorldPos.z * 2.0 + uTime * 0.15);
+    lightPatch = smoothstep(0.20, 1.0, lightPatch);
+    color += lightPatch * vec3(0.22, 0.24, 0.04) * mix(0.45, 1.0, vHeight);
 
     if (uDebugMode == 1)
         color = vec3(vWind, vHeight, vColorVar);

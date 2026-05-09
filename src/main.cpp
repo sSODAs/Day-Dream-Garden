@@ -37,17 +37,17 @@ static const GLint WIDTH = 1280;
 static const GLint HEIGHT = 800;
 static const float PI = 3.14159265359f;
 
-static const float YARD_HALF_W = 4.05f;
-static const float YARD_HALF_D = 2.55f;
+static const float YARD_HALF_W = 8.20f;
+static const float YARD_HALF_D = 6.80f;
 static const float YARD_Z = 1.55f;
 
-static const glm::vec3 DEFAULT_CAMERA_POS(0.0f, 3.51f, 7.74f);
-static const glm::vec3 DEFAULT_CAMERA_TARGET(0.0f, 3.24f, 6.78f);
-static const float CAMERA_FOV_DEG = 45.0f;
+static const glm::vec3 DEFAULT_CAMERA_POS(-0.08f, 2.18f, 8.38f);
+static const glm::vec3 DEFAULT_CAMERA_TARGET(-0.08f, 2.11f, 7.38f);
+static const float CAMERA_FOV_DEG = 35.0f;
 
-static const glm::vec3 BACKDROP_POS(0.0f, 2.08f, -1.35f);
-static const float BACKDROP_HALF_W = 4.05f;
-static const float BACKDROP_HALF_H = 3.38f;
+static const glm::vec3 BACKDROP_POS(0.0f, 1.98f, -4.35f);
+static const float BACKDROP_HALF_W = 8.05f;
+static const float BACKDROP_HALF_H = 4.38f;
 static const float FISH_PATH_X_RADIUS = 3.75f;
 static const float FISH_PATH_Z_RADIUS = 1.85f;
 static const float FISH_PATH_Y = 1.18f;
@@ -203,6 +203,27 @@ struct FishInstance
     float lane = 0.0f;
 };
 
+struct BushCard
+{
+    glm::vec3 pos = glm::vec3(0.0f);
+    glm::vec3 scale = glm::vec3(1.0f);
+    float yaw = 0.0f;
+    float pitch = 0.0f;
+    float roll = 0.0f;
+    float phase = 0.0f;
+    float flex = 1.0f;
+};
+
+struct BushInstance
+{
+    glm::vec3 root = glm::vec3(0.0f);
+    glm::vec3 scale = glm::vec3(1.0f);
+    glm::vec3 tint = glm::vec3(1.0f);
+    float brightness = 1.0f;
+    float alphaCutoff = 0.20f;
+    float windScale = 0.42f;
+};
+
 struct InstancedGrassGL
 {
     GLuint VAO = 0;
@@ -318,6 +339,40 @@ struct InstancedFishGL
     }
 };
 
+struct PointSpriteGL
+{
+    GLuint VAO = 0;
+    GLuint VBO = 0;
+    GLsizei vertexCount = 0;
+
+    void init(const std::vector<float>& pointFloats7)
+    {
+        vertexCount = static_cast<GLsizei>(pointFloats7.size() / 7);
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, pointFloats7.size() * sizeof(float), pointFloats7.data(), GL_STATIC_DRAW);
+
+        const GLsizei stride = 7 * sizeof(float);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+
+        glBindVertexArray(0);
+    }
+
+    void destroy()
+    {
+        if (VBO) glDeleteBuffers(1, &VBO);
+        if (VAO) glDeleteVertexArrays(1, &VAO);
+        VAO = VBO = 0;
+        vertexCount = 0;
+    }
+};
+
 static float hash01(int n)
 {
     float s = std::sin(float(n) * 12.9898f + 78.233f) * 43758.5453f;
@@ -370,6 +425,34 @@ static void pushLine(std::vector<float>& data, glm::vec3 a, glm::vec3 b, glm::ve
     data.push_back(c.r); data.push_back(c.g); data.push_back(c.b);
     data.push_back(b.x); data.push_back(b.y); data.push_back(b.z);
     data.push_back(c.r); data.push_back(c.g); data.push_back(c.b);
+}
+
+static void pushAxisLine(std::vector<float>& data, glm::vec3 origin, glm::vec3 dir,
+                         float len, glm::vec3 color, glm::vec3 tickA, glm::vec3 tickB)
+{
+    dir = safeNormalize3(dir, glm::vec3(1.0f, 0.0f, 0.0f));
+    tickA = safeNormalize3(tickA, glm::vec3(0.0f, 1.0f, 0.0f));
+    tickB = safeNormalize3(tickB, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    glm::vec3 tip = origin + dir * len;
+    float head = len * 0.14f;
+    float wing = len * 0.055f;
+    pushLine(data, origin, tip, color);
+    pushLine(data, tip, tip - dir * head + tickA * wing, color);
+    pushLine(data, tip, tip - dir * head - tickA * wing, color);
+    pushLine(data, tip, tip - dir * head + tickB * wing, color);
+    pushLine(data, tip, tip - dir * head - tickB * wing, color);
+}
+
+static void pushBushDebugAxes(std::vector<float>& data, glm::vec3 root, glm::vec3 scale)
+{
+    float len = std::max(0.45f, std::max(scale.x, std::max(scale.y, scale.z)) * 0.82f);
+    pushLine(data, root + glm::vec3(-0.06f, 0.0f, 0.0f), root + glm::vec3(0.06f, 0.0f, 0.0f), glm::vec3(0.95f, 0.95f, 0.95f));
+    pushLine(data, root + glm::vec3(0.0f, -0.06f, 0.0f), root + glm::vec3(0.0f, 0.06f, 0.0f), glm::vec3(0.95f, 0.95f, 0.95f));
+    pushLine(data, root + glm::vec3(0.0f, 0.0f, -0.06f), root + glm::vec3(0.0f, 0.0f, 0.06f), glm::vec3(0.95f, 0.95f, 0.95f));
+    pushAxisLine(data, root, glm::vec3(1.0f, 0.0f, 0.0f), len, glm::vec3(1.0f, 0.08f, 0.06f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    pushAxisLine(data, root, glm::vec3(0.0f, 1.0f, 0.0f), len, glm::vec3(0.18f, 1.0f, 0.18f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    pushAxisLine(data, root, glm::vec3(0.0f, 0.0f, 1.0f), len, glm::vec3(0.15f, 0.35f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 static std::array<unsigned char, 7> glyph5x7(char ch)
@@ -1064,6 +1147,475 @@ static GLuint makeSolidTexture(glm::vec3 color)
     return tex;
 }
 
+static GLuint makeFoliageClusterTexture(int size, int seed)
+{
+    std::vector<unsigned char> rgba(size * size * 4, 0);
+
+    auto blendPixel = [&](int x, int y, glm::vec3 color, float alpha)
+    {
+        if (x < 0 || x >= size || y < 0 || y >= size || alpha <= 0.0f) return;
+        alpha = std::max(0.0f, std::min(1.0f, alpha));
+
+        int idx = (y * size + x) * 4;
+        float dstA = rgba[idx + 3] / 255.0f;
+        glm::vec3 dst(rgba[idx] / 255.0f, rgba[idx + 1] / 255.0f, rgba[idx + 2] / 255.0f);
+        float outA = alpha + dstA * (1.0f - alpha);
+        glm::vec3 out = color;
+        if (outA > 0.0001f)
+            out = (color * alpha + dst * dstA * (1.0f - alpha)) / outA;
+
+        rgba[idx] = static_cast<unsigned char>(std::max(0.0f, std::min(1.0f, out.r)) * 255.0f);
+        rgba[idx + 1] = static_cast<unsigned char>(std::max(0.0f, std::min(1.0f, out.g)) * 255.0f);
+        rgba[idx + 2] = static_cast<unsigned char>(std::max(0.0f, std::min(1.0f, out.b)) * 255.0f);
+        rgba[idx + 3] = static_cast<unsigned char>(std::max(0.0f, std::min(1.0f, outA)) * 255.0f);
+    };
+
+    const std::array<glm::vec3, 7> palette = {
+        glm::vec3(0.34f, 0.46f, 0.18f),
+        glm::vec3(0.43f, 0.56f, 0.23f),
+        glm::vec3(0.54f, 0.65f, 0.29f),
+        glm::vec3(0.65f, 0.74f, 0.35f),
+        glm::vec3(0.75f, 0.82f, 0.43f),
+        glm::vec3(0.84f, 0.88f, 0.52f),
+        glm::vec3(0.93f, 0.94f, 0.64f)
+    };
+
+    const int leafCount = 82;
+    for (int i = 0; i < leafCount; ++i)
+    {
+        float a = hash01(seed * 17 + i * 11) * PI * 2.0f;
+        float r = std::pow(hash01(seed * 19 + i * 13), 0.54f);
+        float cx = (0.50f + std::cos(a) * r * 0.40f) * (float)size;
+        float cy = (0.50f + std::sin(a) * r * 0.36f) * (float)size;
+        float w = (10.0f + hash01(seed * 23 + i * 17) * 24.0f) * (1.06f - r * 0.28f);
+        float h = (6.0f + hash01(seed * 29 + i * 19) * 16.0f) * (1.02f - r * 0.20f);
+        if (hash01(seed * 31 + i * 23) > 0.55f)
+            std::swap(w, h);
+        float rot = hash01(seed * 37 + i * 29) * PI;
+        float ca = std::cos(rot);
+        float sa = std::sin(rot);
+
+        float heightMix = 1.0f - cy / (float)size;
+        float lightMix = glm::clamp(0.90f + heightMix * 3.95f + (0.5f - r) * 1.05f +
+                                    (hash01(seed * 41 + i * 31) - 0.5f) * 1.20f,
+                                    0.0f, (float)palette.size() - 1.01f);
+        int pi = (int)lightMix;
+        glm::vec3 color = glm::mix(palette[pi], palette[std::min((int)palette.size() - 1, pi + 1)], lightMix - (float)pi);
+        color = glm::mix(color, glm::vec3(0.82f, 0.86f, 0.50f), 0.18f);
+
+        int minX = std::max(0, (int)std::floor(cx - w));
+        int maxX = std::min(size - 1, (int)std::ceil(cx + w));
+        int minY = std::max(0, (int)std::floor(cy - h));
+        int maxY = std::min(size - 1, (int)std::ceil(cy + h));
+
+        for (int y = minY; y <= maxY; ++y)
+        {
+            for (int x = minX; x <= maxX; ++x)
+            {
+                float dx = (float)x - cx;
+                float dy = (float)y - cy;
+                float lx = (dx * ca + dy * sa) / std::max(1.0f, w);
+                float ly = (-dx * sa + dy * ca) / std::max(1.0f, h);
+                float d = std::max(std::abs(lx), std::abs(ly));
+                float alpha = 1.0f - glm::smoothstep(0.62f, 1.02f, d);
+                float chip = std::sin((float)x * 0.23f + rot) * std::sin((float)y * 0.19f + rot * 1.7f);
+                alpha *= 0.86f + chip * 0.10f;
+                blendPixel(x, y, color, alpha);
+            }
+        }
+    }
+
+    GLuint tex = 0;
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size, size, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgba.data());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return tex;
+}
+
+static std::vector<BushCard> makeBushCards(int seed)
+{
+    std::vector<BushCard> cards;
+    cards.reserve(76);
+
+    auto addCard = [&](glm::vec3 pos, glm::vec3 scale, float yawDeg, float pitchDeg, float rollDeg)
+    {
+        BushCard c;
+        c.pos = pos;
+        c.scale = scale;
+        c.yaw = glm::radians(yawDeg);
+        c.pitch = glm::radians(pitchDeg);
+        c.roll = glm::radians(rollDeg);
+        int cardSeed = seed * 307 + (int)cards.size() * 31;
+        c.phase = hash01(cardSeed + 5) * PI * 2.0f;
+        c.flex = 0.72f + hash01(cardSeed + 11) * 0.44f;
+        cards.push_back(c);
+    };
+
+    const glm::vec3 radius(1.08f, 0.88f, 0.92f);
+    const std::array<int, 6> ringCounts = { 7, 10, 13, 12, 9, 5 };
+    const std::array<float, 6> ringY = { -0.54f, -0.30f, -0.06f, 0.20f, 0.45f, 0.66f };
+
+    int cardIndex = 0;
+    for (int ring = 0; ring < (int)ringCounts.size(); ++ring)
+    {
+        float y = ringY[ring];
+        float ringRadius = std::sqrt(std::max(0.0f, 1.0f - (y / radius.y) * (y / radius.y)));
+        for (int j = 0; j < ringCounts[ring]; ++j)
+        {
+            int i = cardIndex++;
+            float jitter = (hash01(seed * 211 + i * 13) - 0.5f) * 0.36f;
+            float a = ((float)j / (float)ringCounts[ring]) * PI * 2.0f +
+                      (float)ring * 0.47f + jitter;
+            float shell = 0.82f + hash01(seed * 223 + i * 17) * 0.24f;
+            glm::vec3 pos(std::cos(a) * radius.x * ringRadius * shell,
+                          y + (hash01(seed * 227 + i * 19) - 0.5f) * 0.13f,
+                          std::sin(a) * radius.z * ringRadius * shell);
+
+            glm::vec3 normal = safeNormalize3(glm::vec3(pos.x / radius.x,
+                                                        pos.y / radius.y,
+                                                        pos.z / radius.z),
+                                              glm::vec3(0.0f, 0.0f, 1.0f));
+            float yawDeg = glm::degrees(std::atan2(normal.x, normal.z));
+            float pitchDeg = -glm::degrees(std::asin(glm::clamp(normal.y, -0.92f, 0.92f)));
+            float rollDeg = -26.0f + hash01(seed * 229 + i * 23) * 52.0f;
+
+            float topLight = glm::clamp((pos.y + radius.y) / (radius.y * 2.0f), 0.0f, 1.0f);
+            float s = 0.62f + hash01(seed * 233 + i * 29) * 0.23f + topLight * 0.06f;
+            addCard(pos, glm::vec3(s * (1.02f + hash01(seed * 239 + i * 31) * 0.20f),
+                                   s * (0.84f + hash01(seed * 241 + i * 37) * 0.18f),
+                                   1.0f),
+                    yawDeg, pitchDeg, rollDeg);
+        }
+    }
+
+    for (int i = 0; i < 18; ++i)
+    {
+        float a = hash01(seed * 251 + i * 11) * PI * 2.0f;
+        float r = std::pow(hash01(seed * 257 + i * 13), 0.42f);
+        float y = -0.36f + hash01(seed * 263 + i * 17) * 0.86f;
+        glm::vec3 pos(std::cos(a) * radius.x * r * 0.62f,
+                      y,
+                      std::sin(a) * radius.z * r * 0.62f);
+        float yawDeg = -180.0f + hash01(seed * 269 + i * 19) * 360.0f;
+        float pitchDeg = -24.0f + hash01(seed * 271 + i * 23) * 48.0f;
+        float rollDeg = -34.0f + hash01(seed * 277 + i * 29) * 68.0f;
+        float s = 0.48f + hash01(seed * 281 + i * 31) * 0.22f;
+        addCard(pos, glm::vec3(s * 1.10f, s * 0.90f, 1.0f), yawDeg, pitchDeg, rollDeg);
+    }
+
+    return cards;
+}
+
+static void pushColorVertex(std::vector<float>& v, glm::vec3 p, glm::vec3 color)
+{
+    v.push_back(p.x); v.push_back(p.y); v.push_back(p.z);
+    v.push_back(color.r); v.push_back(color.g); v.push_back(color.b);
+}
+
+static void addRectLeafCard(std::vector<float>& vertices, std::vector<unsigned int>& indices,
+                            glm::vec3 center, glm::vec3 right, glm::vec3 up,
+                            float width, float height, glm::vec3 color, int seed)
+{
+    right = safeNormalize3(right, glm::vec3(1.0f, 0.0f, 0.0f));
+    up = safeNormalize3(up, glm::vec3(0.0f, 1.0f, 0.0f));
+
+    float skew = (hash01(seed * 71 + 3) - 0.5f) * width * 0.36f;
+    glm::vec3 r = right * (width * 0.5f);
+    glm::vec3 u = up * (height * 0.5f);
+    glm::vec3 s = right * skew;
+    glm::vec3 lift(0.0f, 0.0f, (hash01(seed * 73 + 5) - 0.5f) * width * 0.18f);
+    glm::vec3 c0 = glm::clamp(color * (0.78f + hash01(seed * 79 + 7) * 0.18f), glm::vec3(0.0f), glm::vec3(1.0f));
+    glm::vec3 c1 = glm::clamp(color * (0.94f + hash01(seed * 83 + 11) * 0.20f), glm::vec3(0.0f), glm::vec3(1.0f));
+    glm::vec3 c2 = glm::clamp(color * (1.04f + hash01(seed * 89 + 13) * 0.22f), glm::vec3(0.0f), glm::vec3(1.0f));
+    glm::vec3 c3 = glm::clamp(color * (0.86f + hash01(seed * 97 + 17) * 0.18f), glm::vec3(0.0f), glm::vec3(1.0f));
+
+    unsigned int first = static_cast<unsigned int>(vertices.size() / 6);
+    pushColorVertex(vertices, center - r - u - s, c0);
+    pushColorVertex(vertices, center + r - u + s, c1);
+    pushColorVertex(vertices, center + r + u + lift, c2);
+    pushColorVertex(vertices, center - r + u - lift, c3);
+    indices.insert(indices.end(), { first, first + 1, first + 2, first, first + 2, first + 3 });
+}
+
+static void addFlowerChip(std::vector<float>& vertices, std::vector<unsigned int>& indices,
+                          glm::vec3 center, glm::vec3 right, glm::vec3 up,
+                          float size, glm::vec3 color)
+{
+    right = safeNormalize3(right, glm::vec3(1.0f, 0.0f, 0.0f)) * size;
+    up = safeNormalize3(up, glm::vec3(0.0f, 1.0f, 0.0f)) * size;
+    unsigned int first = static_cast<unsigned int>(vertices.size() / 6);
+    pushColorVertex(vertices, center - right - up, color * 0.78f);
+    pushColorVertex(vertices, center + right - up, color);
+    pushColorVertex(vertices, center + right + up, glm::min(color * 1.18f, glm::vec3(1.0f)));
+    pushColorVertex(vertices, center - right + up, color * 0.92f);
+    indices.insert(indices.end(), { first, first + 1, first + 2, first, first + 2, first + 3 });
+}
+
+static void addLayeredLeafGroup(std::vector<float>& vertices, std::vector<unsigned int>& indices,
+                                glm::vec3 center, glm::vec3 right, glm::vec3 up, glm::vec3 outward,
+                                float width, float height, glm::vec3 color, int seed)
+{
+    right = safeNormalize3(right, glm::vec3(1.0f, 0.0f, 0.0f));
+    up = safeNormalize3(up, glm::vec3(0.0f, 1.0f, 0.0f));
+    outward = safeNormalize3(outward, safeNormalize3(glm::cross(right, up), glm::vec3(0.0f, 0.0f, 1.0f)));
+
+    auto layerAxes = [&](float angle, glm::vec3& r, glm::vec3& u)
+    {
+        float c = std::cos(angle);
+        float s = std::sin(angle);
+        r = safeNormalize3(right * c + up * s, right);
+        u = safeNormalize3(up * c - right * s + outward * 0.08f, up);
+    };
+
+    glm::vec3 r, u;
+    float baseAngle = (hash01(seed * 211 + 1) - 0.5f) * 0.55f;
+    float depth = std::max(width, height);
+
+    layerAxes(baseAngle - 0.42f, r, u);
+    addRectLeafCard(vertices, indices,
+                    center - outward * depth * 0.13f - up * height * 0.10f,
+                    r, u, width * 1.18f, height * 1.02f,
+                    glm::clamp(color * 0.54f, glm::vec3(0.0f), glm::vec3(1.0f)), seed + 10);
+
+    layerAxes(baseAngle + 0.36f, r, u);
+    addRectLeafCard(vertices, indices,
+                    center - right * width * 0.30f - outward * depth * 0.04f,
+                    r, u, width * 0.96f, height * 0.82f,
+                    glm::clamp(color * 0.74f, glm::vec3(0.0f), glm::vec3(1.0f)), seed + 20);
+
+    layerAxes(baseAngle - 0.16f, r, u);
+    addRectLeafCard(vertices, indices,
+                    center + right * width * 0.22f + up * height * 0.04f,
+                    r, u, width * 0.92f, height * 0.80f,
+                    glm::clamp(color * 0.88f, glm::vec3(0.0f), glm::vec3(1.0f)), seed + 30);
+
+    layerAxes(baseAngle + 0.10f, r, u);
+    addRectLeafCard(vertices, indices,
+                    center + outward * depth * 0.08f + up * height * 0.18f,
+                    r, u, width * 0.82f, height * 0.70f,
+                    glm::clamp(color * 1.06f, glm::vec3(0.0f), glm::vec3(1.0f)), seed + 40);
+
+    layerAxes(baseAngle + 0.58f, r, u);
+    addRectLeafCard(vertices, indices,
+                    center + outward * depth * 0.14f + up * height * 0.38f +
+                    right * width * (hash01(seed * 223 + 3) - 0.5f) * 0.36f,
+                    r, u, width * 0.54f, height * 0.48f,
+                    glm::clamp(color * (1.18f + hash01(seed * 227 + 5) * 0.14f), glm::vec3(0.0f), glm::vec3(1.0f)),
+                    seed + 50);
+}
+
+static void addBushCore(std::vector<float>& vertices, std::vector<unsigned int>& indices,
+                        glm::vec3 radius, int seed)
+{
+    const int rings = 14;
+    const int slices = 28;
+    unsigned int first = static_cast<unsigned int>(vertices.size() / 6);
+
+    for (int y = 0; y <= rings; ++y)
+    {
+        float v = (float)y / (float)rings;
+        float theta = -PI * 0.5f + v * PI;
+        float cy = std::cos(theta);
+        float sy = std::sin(theta);
+
+        for (int x = 0; x <= slices; ++x)
+        {
+            float u = (float)x / (float)slices;
+            float phi = u * PI * 2.0f;
+            float wobble = 0.93f +
+                0.045f * std::sin(phi * 3.0f + seed * 0.31f) +
+                0.035f * std::sin(phi * 5.0f + theta * 4.0f + seed * 0.17f);
+
+            glm::vec3 p(std::cos(phi) * cy * radius.x * wobble,
+                        sy * radius.y * (0.92f + 0.05f * std::sin(phi * 2.0f + seed)),
+                        std::sin(phi) * cy * radius.z * wobble);
+
+            float top = glm::clamp(p.y / std::max(0.001f, radius.y) * 0.5f + 0.5f, 0.0f, 1.0f);
+            float front = glm::clamp(p.z / std::max(0.001f, radius.z) * 0.5f + 0.5f, 0.0f, 1.0f);
+            float sun = glm::smoothstep(-0.45f, 0.95f, p.x / radius.x + p.y / radius.y * 0.8f);
+
+            glm::vec3 base = glm::mix(glm::vec3(0.025f, 0.105f, 0.055f),
+                                      glm::vec3(0.18f, 0.38f, 0.13f),
+                                      top * 0.72f + sun * 0.18f);
+            glm::vec3 color = glm::mix(base, glm::vec3(0.04f, 0.17f, 0.08f), front * 0.28f);
+            if (top > 0.62f && sun > 0.48f)
+                color = glm::mix(color, glm::vec3(0.54f, 0.68f, 0.18f), (top - 0.62f) * sun * 1.15f);
+
+            pushColorVertex(vertices, p, glm::clamp(color, glm::vec3(0.0f), glm::vec3(1.0f)));
+        }
+    }
+
+    int row = slices + 1;
+    for (int y = 0; y < rings; ++y)
+    {
+        for (int x = 0; x < slices; ++x)
+        {
+            unsigned int a = first + y * row + x;
+            unsigned int b = first + y * row + x + 1;
+            unsigned int c = first + (y + 1) * row + x + 1;
+            unsigned int d = first + (y + 1) * row + x;
+            indices.insert(indices.end(), { a, b, c, a, c, d });
+        }
+    }
+}
+
+static ColorMeshGL makeBushClusterMesh(int seed, float halfWidth, float halfHeight, float halfDepth, int leafCount)
+{
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
+    vertices.reserve((leafCount * 5 + 460) * 4 * 6);
+    indices.reserve((leafCount * 5 + 460) * 6);
+
+    struct BushLobe
+    {
+        glm::vec3 center;
+        glm::vec3 radius;
+        float weight;
+        float brightness;
+    };
+
+    const std::array<BushLobe, 12> lobes = {{
+        { glm::vec3(-0.58f, -0.44f,  0.42f), glm::vec3(0.48f, 0.38f, 0.42f), 0.090f, 0.56f },
+        { glm::vec3( 0.00f, -0.48f,  0.48f), glm::vec3(0.58f, 0.36f, 0.45f), 0.110f, 0.60f },
+        { glm::vec3( 0.58f, -0.42f,  0.36f), glm::vec3(0.48f, 0.38f, 0.42f), 0.090f, 0.54f },
+        { glm::vec3(-0.72f, -0.08f,  0.18f), glm::vec3(0.50f, 0.46f, 0.46f), 0.090f, 0.70f },
+        { glm::vec3(-0.18f,  0.02f,  0.30f), glm::vec3(0.62f, 0.52f, 0.52f), 0.125f, 0.82f },
+        { glm::vec3( 0.46f, -0.02f,  0.18f), glm::vec3(0.56f, 0.50f, 0.50f), 0.105f, 0.72f },
+        { glm::vec3(-0.38f,  0.32f, -0.10f), glm::vec3(0.44f, 0.42f, 0.42f), 0.080f, 1.02f },
+        { glm::vec3( 0.14f,  0.42f,  0.02f), glm::vec3(0.48f, 0.42f, 0.44f), 0.090f, 1.10f },
+        { glm::vec3( 0.58f,  0.28f, -0.08f), glm::vec3(0.40f, 0.40f, 0.40f), 0.065f, 0.94f },
+        { glm::vec3(-0.54f,  0.03f, -0.48f), glm::vec3(0.46f, 0.42f, 0.44f), 0.070f, 0.62f },
+        { glm::vec3( 0.08f,  0.08f, -0.52f), glm::vec3(0.58f, 0.48f, 0.50f), 0.100f, 0.66f },
+        { glm::vec3( 0.60f,  0.00f, -0.42f), glm::vec3(0.44f, 0.40f, 0.42f), 0.075f, 0.58f }
+    }};
+
+    const std::array<glm::vec3, 7> palette = {
+        glm::vec3(0.03f, 0.13f, 0.07f),
+        glm::vec3(0.05f, 0.21f, 0.10f),
+        glm::vec3(0.10f, 0.34f, 0.14f),
+        glm::vec3(0.23f, 0.48f, 0.18f),
+        glm::vec3(0.45f, 0.65f, 0.20f),
+        glm::vec3(0.68f, 0.80f, 0.22f),
+        glm::vec3(0.86f, 0.91f, 0.30f)
+    };
+
+    addBushCore(vertices, indices, glm::vec3(halfWidth * 0.94f, halfHeight * 0.88f, halfDepth * 0.92f), seed);
+
+    int emittedLeaves = 0;
+    for (int lobeIndex = 0; lobeIndex < (int)lobes.size(); ++lobeIndex)
+    {
+        const BushLobe& lobe = lobes[lobeIndex];
+        int lobeLeaves = std::max(18, (int)std::round((float)leafCount * lobe.weight));
+        glm::vec3 lobeCenter(lobe.center.x * halfWidth,
+                             lobe.center.y * halfHeight,
+                             lobe.center.z * halfDepth);
+        glm::vec3 lobeRadius(lobe.radius.x * halfWidth,
+                             lobe.radius.y * halfHeight,
+                             lobe.radius.z * halfDepth);
+
+        for (int j = 0; j < lobeLeaves; ++j)
+        {
+            int i = emittedLeaves++;
+            float azimuth = hash01(seed * 101 + i * 17) * PI * 2.0f;
+            float vertical = hash01(seed * 103 + i * 19) * 2.0f - 1.0f;
+            float radius = std::pow(hash01(seed * 107 + i * 23), 0.24f);
+            float ring = std::sqrt(std::max(0.0f, 1.0f - vertical * vertical));
+            glm::vec3 local(std::cos(azimuth) * ring * radius * lobeRadius.x,
+                            vertical * radius * lobeRadius.y,
+                            std::sin(azimuth) * ring * radius * lobeRadius.z);
+            glm::vec3 center = lobeCenter + local;
+            center.z += (hash01(seed * 109 + i * 29) - 0.5f) * lobeRadius.z * 0.22f;
+
+            float ellipsoid = std::min(1.0f, (local.x * local.x) / (lobeRadius.x * lobeRadius.x) +
+                                             (local.y * local.y) / (lobeRadius.y * lobeRadius.y) +
+                                             (local.z * local.z) / (lobeRadius.z * lobeRadius.z));
+            float inner = 1.0f - ellipsoid;
+            float front = glm::smoothstep(-halfDepth * 0.62f, halfDepth * 0.56f, center.z);
+            float upper = glm::clamp((center.y / halfHeight) * 0.5f + 0.5f, 0.0f, 1.0f);
+            float sun = glm::smoothstep(-halfWidth * 0.64f, halfWidth * 0.62f, center.x + center.y * 0.72f);
+
+            float rotation = hash01(seed * 113 + i * 31) * PI * 2.0f;
+            glm::vec3 outward = safeNormalize3(glm::vec3(local.x / std::max(0.001f, lobeRadius.x),
+                                                         local.y / std::max(0.001f, lobeRadius.y),
+                                                         local.z / std::max(0.001f, lobeRadius.z)),
+                                               glm::vec3(0.0f, 1.0f, 0.0f));
+            glm::vec3 tangentA = safeNormalize3(glm::cross(outward, glm::vec3(0.0f, 1.0f, 0.0f)),
+                                                glm::vec3(1.0f, 0.0f, 0.0f));
+            glm::vec3 tangentB = safeNormalize3(glm::cross(tangentA, outward), glm::vec3(0.0f, 1.0f, 0.0f));
+            glm::vec3 right = safeNormalize3(tangentA * std::cos(rotation) +
+                                             tangentB * std::sin(rotation) +
+                                             outward * ((hash01(seed * 127 + i * 37) - 0.5f) * 0.34f),
+                                             glm::vec3(1.0f, 0.0f, 0.0f));
+            glm::vec3 up = safeNormalize3(glm::cross(outward, right) +
+                                          outward * ((hash01(seed * 131 + i * 41) - 0.5f) * 0.26f),
+                                          glm::vec3(0.0f, 1.0f, 0.0f));
+
+            float paletteF = glm::clamp(upper * 4.7f + sun * 1.35f + lobe.brightness * 1.4f -
+                                        front * 1.15f - inner * 0.42f +
+                                        (hash01(seed * 137 + i * 43) - 0.5f) * 1.45f,
+                                        0.0f, (float)palette.size() - 1.01f);
+            int paletteIndex = (int)paletteF;
+            glm::vec3 color = palette[paletteIndex];
+            color = glm::mix(color, palette[std::min((int)palette.size() - 1, paletteIndex + 1)], paletteF - (float)paletteIndex);
+            color *= lobe.brightness * (0.82f + hash01(seed * 139 + i * 47) * 0.28f);
+
+            float cardW = (0.135f + hash01(seed * 149 + i * 53) * 0.135f) * (0.94f + inner * 0.18f);
+            float cardH = (0.075f + hash01(seed * 151 + i * 59) * 0.095f) * (0.94f + inner * 0.14f);
+            if (hash01(seed * 157 + i * 61) > 0.58f)
+                std::swap(cardW, cardH);
+
+            addLayeredLeafGroup(vertices, indices, center, right, up, outward, cardW, cardH,
+                                glm::clamp(color, glm::vec3(0.0f), glm::vec3(1.0f)), seed * 1000 + i);
+        }
+    }
+
+    for (int i = 0; i < 18; ++i)
+    {
+        const BushLobe& lobe = lobes[4 + (i % 5)];
+        float a = hash01(seed * 163 + i * 7) * PI * 2.0f;
+        float r = std::sqrt(hash01(seed * 167 + i * 11)) * 0.46f;
+        float x = lobe.center.x * halfWidth + std::cos(a) * r * lobe.radius.x * halfWidth;
+        float y = lobe.center.y * halfHeight + (0.12f + hash01(seed * 173 + i * 13) * 0.70f) * lobe.radius.y * halfHeight;
+        float z = lobe.center.z * halfDepth + std::sin(a) * r * lobe.radius.z * halfDepth;
+        float rot = hash01(seed * 181 + i * 19) * PI * 2.0f;
+        glm::vec3 right(std::cos(rot), std::sin(rot) * 0.30f, 0.18f);
+        glm::vec3 up(-std::sin(rot) * 0.30f, std::cos(rot), 0.12f);
+        glm::vec3 blue = glm::mix(glm::vec3(0.05f, 0.45f, 0.44f), glm::vec3(0.14f, 0.80f, 0.92f), hash01(seed * 191 + i * 23));
+        addFlowerChip(vertices, indices, glm::vec3(x, y, z), right, up,
+                      0.035f + hash01(seed * 193 + i * 29) * 0.026f, blue);
+    }
+
+    return buildColorMesh(vertices, indices);
+}
+
+static std::vector<float> makeFireflyPoints(int count)
+{
+    std::vector<float> data;
+    data.reserve(count * 7);
+    for (int i = 0; i < count; ++i)
+    {
+        float rx = hash01(i * 19 + 1);
+        float ry = hash01(i * 23 + 2);
+        float rz = hash01(i * 29 + 3);
+        float x = -4.55f + rx * 9.10f;
+        float y = 0.42f + ry * 2.78f;
+        float z = -2.25f + rz * 4.35f;
+        float phase = hash01(i * 31 + 4) * PI * 2.0f;
+        float size = 12.0f + hash01(i * 37 + 5) * 10.0f;
+        float speed = 0.75f + hash01(i * 41 + 6) * 1.35f;
+        float warmth = hash01(i * 43 + 7);
+
+        data.insert(data.end(), { x, y, z, phase, size, speed, warmth });
+    }
+    return data;
+}
+
 struct HudLine
 {
     std::string text;
@@ -1198,7 +1750,7 @@ static std::vector<GrassInstance> makeGrassInstances(int count)
         GrassInstance g;
         g.x = -YARD_HALF_W + rx * YARD_HALF_W * 2.0f;
         g.z = YARD_Z + z;
-        g.height = (0.09f + 0.20f * hash01(i * 29 + 5)) * (0.86f + 0.14f * depthMix);
+        g.height = (0.14f + 0.28f * hash01(i * 29 + 5)) * (0.86f + 0.14f * depthMix);
         g.width = g.height * (0.13f + 0.08f * hash01(i * 31 + 9));
         g.yaw = hash01(i * 37 + 11) * 2.0f * PI;
         g.phase = hash01(i * 41 + 13) * 2.0f * PI;
@@ -1274,6 +1826,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_BLEND);
+    glEnable(GL_PROGRAM_POINT_SIZE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(0.06f, 0.10f, 0.08f, 1.0f);
 
@@ -1289,20 +1842,36 @@ int main()
     Shader fishSh;
     fishSh.CreateFromFiles("Shaders/Yard/kinematic_fish.vert", "Shaders/Yard/kinematic_fish.frag");
 
+    Shader fireflySh;
+    fireflySh.CreateFromFiles("Shaders/Yard/firefly.vert", "Shaders/Yard/firefly.frag");
+
     Shader lineSh;
-    lineSh.CreateFromFiles("Shaders/Lab3/line.vert", "Shaders/Lab3/line.frag");
+    lineSh.CreateFromFiles("Shaders/Debug/debug_line.vert", "Shaders/Debug/debug_line.frag");
 
     MeshGL backdrop = makePlaneXY(1.0f, 1.0f);
     MeshGL ground = makeGridXZ(YARD_HALF_W, YARD_HALF_D, 96, 72);
+    MeshGL foliageCard = makePlaneXY(1.0f, 1.0f);
     MeshGL hudPanel = makePlaneXY(1.0f, 1.0f);
     ColorMeshGL windTargetBox = makeColorCube(glm::vec3(0.05f, 0.32f, 1.0f));
 
-    GLuint backdropTex = loadTexture2D("Assets/backdrop.jpg", false);
+    GLuint backdropTex = loadTexture2D("Assets/longbackdrop.png", false);
     GLuint grassTex = loadTexture2D("Assets/grass_patch.jpg", true);
     GLuint fishTex = loadTexture2D("Assets/goldfish.png", false);
+    GLuint foliageClusterTex = makeFoliageClusterTexture(256, 11);
     GLuint hudPanelTex = makeSolidTexture(glm::vec3(0.02f, 0.07f, 0.06f));
+    std::vector<BushCard> bushCards = makeBushCards(11);
+    std::vector<BushInstance> bushes = {
+        {
+            glm::vec3(-4.10f, 0.56f, -2.55f), // x, y, z in the scene
+            glm::vec3(1.32f, 1.22f, 1.28f),  // whole bush size: x, y, z
+            glm::vec3(1.04f, 1.08f, 0.82f),  // warm yellow-green tint
+            1.16f,                           // brightness, not glow
+            0.20f,                           // alpha cutoff
+            0.42f                            // wind response, lower than grass
+        }
+    };
 
-    const int MAX_GRASS = 16000;
+    const int MAX_GRASS = 22000;
     std::vector<GrassInstance> grassInstances = makeGrassInstances(MAX_GRASS);
     std::vector<float> grassInstanceFloats = packGrassInstances(grassInstances);
     InstancedGrassGL instancedGrass;
@@ -1317,19 +1886,25 @@ int main()
         std::cerr << "Failed to load required fish model Assets/goldfish.obj\n";
         return 1;
     }
-    InstancedFishGL fishSchool;
-    fishSchool.init(fishMesh.vertices, fishMesh.indices, fishInstanceFloats);
+    InstancedFishGL fishGroup;
+    fishGroup.init(fishMesh.vertices, fishMesh.indices, fishInstanceFloats);
+
+    PointSpriteGL fireflies;
+    fireflies.init(makeFireflyPoints(58));
 
     DynamicLineGL debugLines;
     debugLines.init(4096);
     HudTextureGL hudTexture;
-    hudTexture.init(500, 170);
+    hudTexture.init(560, 260);
 
     GLint uModel_t = (GLint)texSh.GetUniformLocation("uModel");
     GLint uView_t = (GLint)texSh.GetUniformLocation("uView");
     GLint uProj_t = (GLint)texSh.GetUniformLocation("uProj");
     GLint uTexture_t = (GLint)texSh.GetUniformLocation("uTexture");
     GLint uAlpha_t = (GLint)texSh.GetUniformLocation("uAlpha");
+    GLint uAlphaCutoff_t = (GLint)texSh.GetUniformLocation("uAlphaCutoff");
+    GLint uTint_t = (GLint)texSh.GetUniformLocation("uTint");
+    GLint uBrightness_t = (GLint)texSh.GetUniformLocation("uBrightness");
 
     GLint uModel_g = (GLint)terrainSh.GetUniformLocation("uModel");
     GLint uView_g = (GLint)terrainSh.GetUniformLocation("uView");
@@ -1362,6 +1937,10 @@ int main()
     GLint uYardZ_f = (GLint)fishSh.GetUniformLocation("uYardZ");
     GLint uFishTexture_f = (GLint)fishSh.GetUniformLocation("uFishTexture");
 
+    GLint uView_p = (GLint)fireflySh.GetUniformLocation("uView");
+    GLint uProj_p = (GLint)fireflySh.GetUniformLocation("uProj");
+    GLint uTime_p = (GLint)fireflySh.GetUniformLocation("uTime");
+
     GLint uModel_l = (GLint)lineSh.GetUniformLocation("uModel");
     GLint uView_l = (GLint)lineSh.GetUniformLocation("uView");
     GLint uProj_l = (GLint)lineSh.GetUniformLocation("uProj");
@@ -1378,7 +1957,7 @@ int main()
     float windStrength = 0.85f;
     float windSpeed = 0.38f;
     int windMode = 0;
-    int activeGrass = 12000;
+    int activeGrass = MAX_GRASS;
     int activeFish = 1;
     bool showWindDebug = false;
     bool showGrassDebug = false;
@@ -1541,6 +2120,11 @@ int main()
                     pushLine(debugData, a, a + wv * 0.42f + glm::vec3(0, 0.035f, 0), glm::vec3(1.0f, 0.78f, 0.12f));
                 }
             }
+
+            for (const BushInstance& bush : bushes)
+            {
+                pushBushDebugAxes(debugData, bush.root, bush.scale);
+            }
         }
         if (showGrassDebug)
         {
@@ -1575,6 +2159,25 @@ int main()
             hudLinesData.push_back({ line, glm::vec3(0.86f, 0.88f, 0.91f) });
             std::snprintf(line, sizeof(line), "Target: %.2f, %.2f, %.2f   Keys: IJKL / UO", windTarget.x, windTarget.y, windTarget.z);
             hudLinesData.push_back({ line, glm::vec3(0.91f, 0.86f, 0.54f) });
+            hudLinesData.push_back({ "[CATEGORY: BushSystem]", glm::vec3(0.18f, 1.0f, 0.28f) });
+            int bushCount = static_cast<int>(bushes.size());
+            if (bushCount > 0)
+            {
+                const BushInstance& bush = bushes[0];
+                std::snprintf(line, sizeof(line), "Count: %d   Root: %.2f, %.2f, %.2f",
+                              bushCount, bush.root.x, bush.root.y, bush.root.z);
+                hudLinesData.push_back({ line, glm::vec3(0.86f, 0.88f, 0.91f) });
+                std::snprintf(line, sizeof(line), "Scale: %.2f, %.2f, %.2f   Bright: %.2f   Wind: %.2f",
+                              bush.scale.x, bush.scale.y, bush.scale.z, bush.brightness, bush.windScale);
+                hudLinesData.push_back({ line, glm::vec3(0.64f, 0.78f, 1.0f) });
+                std::snprintf(line, sizeof(line), "Tint: %.2f, %.2f, %.2f   Cutoff: %.2f",
+                              bush.tint.r, bush.tint.g, bush.tint.b, bush.alphaCutoff);
+                hudLinesData.push_back({ line, glm::vec3(0.91f, 0.86f, 0.54f) });
+            }
+            else
+            {
+                hudLinesData.push_back({ "Count: 0", glm::vec3(0.86f, 0.88f, 0.91f) });
+            }
             hudLinesData.push_back({ "[CATEGORY: FishSystem]", glm::vec3(0.18f, 1.0f, 0.28f) });
             float fishScale = fishInstances.empty() ? 0.0f : fishInstances[0].scale;
             float minFishScale = fishScale;
@@ -1635,6 +2238,9 @@ int main()
             glUniformMatrix4fv(uView_t, 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(uProj_t, 1, GL_FALSE, glm::value_ptr(proj));
             glUniform1f(uAlpha_t, 1.0f);
+            glUniform1f(uAlphaCutoff_t, 0.0f);
+            glUniform3f(uTint_t, 1.0f, 1.0f, 1.0f);
+            glUniform1f(uBrightness_t, 1.0f);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, backdropTex);
             glUniform1i(uTexture_t, 0);
@@ -1654,6 +2260,9 @@ int main()
             glUniformMatrix4fv(uView_t, 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(uProj_t, 1, GL_FALSE, glm::value_ptr(proj));
             glUniform1f(uAlpha_t, 1.0f);
+            glUniform1f(uAlphaCutoff_t, 0.0f);
+            glUniform3f(uTint_t, 1.0f, 1.0f, 1.0f);
+            glUniform1f(uBrightness_t, 1.0f);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, grassTex);
             glUniform1i(uTexture_t, 0);
@@ -1679,6 +2288,68 @@ int main()
         glBindVertexArray(ground.VAO);
         glDrawElements(GL_TRIANGLES, ground.indexCount, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+
+        if (foliageClusterTex)
+        {
+            glDisable(GL_BLEND);
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(GL_TRUE);
+            texSh.UseShader();
+            glUniformMatrix4fv(uView_t, 1, GL_FALSE, glm::value_ptr(view));
+            glUniformMatrix4fv(uProj_t, 1, GL_FALSE, glm::value_ptr(proj));
+            glUniform1f(uAlpha_t, 1.0f);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, foliageClusterTex);
+            glUniform1i(uTexture_t, 0);
+
+            for (const BushInstance& bush : bushes)
+            {
+                glUniform1f(uAlphaCutoff_t, bush.alphaCutoff);
+                glUniform3fv(uTint_t, 1, glm::value_ptr(bush.tint));
+                glUniform1f(uBrightness_t, bush.brightness);
+
+                for (const BushCard& card : bushCards)
+                {
+                    glm::vec3 scaledPos = card.pos * bush.scale;
+                    glm::vec3 cardWorld = bush.root + scaledPos;
+                    glm::vec2 cardXZ(cardWorld.x, cardWorld.z);
+                    glm::vec3 windNow = windAt(cardXZ, t + card.phase * 0.10f, windStrength, windSpeed, windVector, windMode);
+                    glm::vec3 windLag = windAt(cardXZ, t - 0.42f + card.phase * 0.07f, windStrength, windSpeed, windVector, windMode);
+                    glm::vec3 windFlat(windNow.x, 0.0f, windNow.z);
+                    glm::vec3 lagFlat(windLag.x, 0.0f, windLag.z);
+                    glm::vec3 windDir3 = safeNormalize3(windFlat, safeNormalize3(windVector, glm::vec3(1.0f, 0.0f, 0.32f)));
+                    glm::vec3 tiltAxis = safeNormalize3(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), windDir3),
+                                                        glm::vec3(0.0f, 0.0f, -1.0f));
+                    float upperFlex = 0.30f + glm::smoothstep(-0.58f, 0.78f, scaledPos.y) * 0.78f;
+                    float windPower = glm::clamp(glm::length(windFlat), 0.0f, 2.0f);
+                    float lagKick = glm::dot(windFlat - lagFlat, windDir3);
+                    float spring = std::sin(t * (2.20f + windSpeed * 0.55f) + card.phase) *
+                                   (0.35f + 0.65f * glm::smoothstep(0.18f, 1.20f, windPower));
+                    float flex = card.flex * upperFlex * bush.windScale;
+                    glm::vec3 swayOffset =
+                        windDir3 * ((windPower * 0.032f + lagKick * 0.020f + spring * windStrength * 0.010f) * flex) +
+                        glm::vec3(0.0f, spring * windStrength * 0.004f * flex, 0.0f);
+                    float tilt = glm::clamp((windPower * 0.055f + lagKick * 0.035f +
+                                             spring * windStrength * 0.018f) * flex,
+                                            -0.14f, 0.14f);
+
+                    glm::mat4 cardM =
+                        glm::translate(identity, cardWorld + swayOffset) *
+                        glm::rotate(identity, tilt, tiltAxis) *
+                        glm::rotate(identity, card.yaw, glm::vec3(0.0f, 1.0f, 0.0f)) *
+                        glm::rotate(identity, card.pitch, glm::vec3(1.0f, 0.0f, 0.0f)) *
+                        glm::rotate(identity, card.roll, glm::vec3(0.0f, 0.0f, 1.0f)) *
+                        glm::scale(identity, card.scale * bush.scale);
+                    glUniformMatrix4fv(uModel_t, 1, GL_FALSE, glm::value_ptr(cardM));
+                    glBindVertexArray(foliageCard.VAO);
+                    glDrawElements(GL_TRIANGLES, foliageCard.indexCount, GL_UNSIGNED_INT, 0);
+                }
+            }
+            glBindVertexArray(0);
+            glUniform1f(uAlphaCutoff_t, 0.0f);
+            glUniform3f(uTint_t, 1.0f, 1.0f, 1.0f);
+            glUniform1f(uBrightness_t, 1.0f);
+        }
 
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
@@ -1713,9 +2384,24 @@ int main()
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, fishTex);
         glUniform1i(uFishTexture_f, 0);
-        glBindVertexArray(fishSchool.VAO);
-        glDrawElementsInstanced(GL_TRIANGLES, fishSchool.indexCount, GL_UNSIGNED_INT, 0, activeFish);
+        glBindVertexArray(fishGroup.VAO);
+        glDrawElementsInstanced(GL_TRIANGLES, fishGroup.indexCount, GL_UNSIGNED_INT, 0, activeFish);
         glBindVertexArray(0);
+
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(GL_FALSE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        fireflySh.UseShader();
+        glUniformMatrix4fv(uView_p, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(uProj_p, 1, GL_FALSE, glm::value_ptr(proj));
+        glUniform1f(uTime_p, t);
+        glBindVertexArray(fireflies.VAO);
+        glDrawArrays(GL_POINTS, 0, fireflies.vertexCount);
+        glBindVertexArray(0);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
 
         glDisable(GL_DEPTH_TEST);
         lineSh.UseShader();
@@ -1750,6 +2436,9 @@ int main()
             glUniformMatrix4fv(uView_t, 1, GL_FALSE, glm::value_ptr(identity));
             glUniformMatrix4fv(uProj_t, 1, GL_FALSE, glm::value_ptr(hudProj));
             glUniform1f(uAlpha_t, 1.0f);
+            glUniform1f(uAlphaCutoff_t, 0.0f);
+            glUniform3f(uTint_t, 1.0f, 1.0f, 1.0f);
+            glUniform1f(uBrightness_t, 1.0f);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, hudTexture.texture);
             glUniform1i(uTexture_t, 0);
@@ -1768,13 +2457,16 @@ int main()
     if (grassTex) glDeleteTextures(1, &grassTex);
     if (backdropTex) glDeleteTextures(1, &backdropTex);
     if (fishTex) glDeleteTextures(1, &fishTex);
+    if (foliageClusterTex) glDeleteTextures(1, &foliageClusterTex);
     if (hudPanelTex) glDeleteTextures(1, &hudPanelTex);
     hudTexture.destroy();
     debugLines.destroy();
+    fireflies.destroy();
     instancedGrass.destroy();
-    fishSchool.destroy();
+    fishGroup.destroy();
     windTargetBox.destroy();
     hudPanel.destroy();
+    foliageCard.destroy();
     ground.destroy();
     backdrop.destroy();
     return 0;

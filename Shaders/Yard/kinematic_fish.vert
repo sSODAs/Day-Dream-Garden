@@ -4,7 +4,7 @@ layout(location=0) in vec3 aPos;
 layout(location=1) in vec3 aColor;
 layout(location=4) in vec2 aUV;
 
-// xyz = local school offset, w = phase
+// xyz = local group offset, w = phase
 layout(location=2) in vec4 iOffsetPhase;
 // x = scale, y = speed, z = color variation, w = lane
 layout(location=3) in vec4 iParams;

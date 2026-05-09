@@ -9,8 +9,6 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(glew CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 
-# IMPORTANT:
-# Don't glob src/*.cpp (avoids accidental multiple mains later).
 set(LIB_FILES
   "${CMAKE_SOURCE_DIR}/src/Libs/Shader.cpp"
   "${CMAKE_SOURCE_DIR}/src/Libs/Window.cpp"

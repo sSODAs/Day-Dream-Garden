@@ -89,6 +89,11 @@ void main()
     float sunWash = smoothstep(-0.20, 1.0, p.x * 0.22 - p.y * 0.18);
     color += vec3(0.10, 0.08, 0.01) * sunWash;
 
+    float lightPatch = sin(vWorldPos.x * 2.5 + uTime * 0.20) *
+                       sin(vWorldPos.z * 2.0 + uTime * 0.15);
+    lightPatch = smoothstep(0.20, 1.0, lightPatch);
+    color += lightPatch * vec3(0.25, 0.25, 0.05);
+
     if (uDebugMode == 1)
         color = vec3(longWave, gust, movingShadow);
 
