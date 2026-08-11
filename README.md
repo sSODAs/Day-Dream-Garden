@@ -17,7 +17,6 @@ Bushes are created from multiple **texture cards** placed at different angles an
 Fireflies are rendered as small glowing **point sprites**, with their movement and brightness animated independently over time.
 
 ## Main Graphics Techniques
-
 **Instanced Grass Rendering**
 
 A single grass geometry is reused to render many grass blades through instanced rendering.
