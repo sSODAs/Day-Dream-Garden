@@ -1,6 +1,6 @@
 # Day-Dream-Garden
 
-<img src="images/preview.png" width="450"> <img src="images/debug.png" width="450">
+<img src="images/preview.png" width="400"> <img src="images/debug.png" width="400">
 
 Day Dream Garden is a small **real-time OpenGL (C++) animation project** that creates a stylized living garden using procedural animation, shaders, and GPU-based rendering techniques.
 This project was created as part of the **Advanced Computer Graphics** course, focusing on making a static environment feel alive through mathematics, procedural motion, and real-time rendering rather than relying on pre-made animations or full physics simulation.
